@@ -2,8 +2,14 @@ from django.db import models
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Название категории", help_text="Введите название категории")
-    description = models.TextField(verbose_name="Описание", help_text="Введите описание", blank=True, null=True)
+    name = models.CharField(
+        max_length=100,
+        verbose_name="Название категории",
+        help_text="Введите название категории",
+    )
+    description = models.TextField(
+        verbose_name="Описание", help_text="Введите описание", blank=True, null=True
+    )
 
     class Meta:
         verbose_name = "Категория"
@@ -14,8 +20,12 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Название продукта", help_text="Название продукта")
-    description = models.TextField(verbose_name="Описание", help_text="Описание продукта", blank=True, null=True)
+    name = models.CharField(
+        max_length=100, verbose_name="Название продукта", help_text="Название продукта"
+    )
+    description = models.TextField(
+        verbose_name="Описание", help_text="Описание продукта", blank=True, null=True
+    )
     image = models.ImageField(
         upload_to="catalog/media",
         blank=True,
@@ -30,9 +40,13 @@ class Product(models.Model):
         verbose_name="Категория",
         help_text="Выберите категорию",
     )
-    price = models.IntegerField(verbose_name="Цена за единицу", help_text="Введите цену", blank=True, null=True)
+    price = models.IntegerField(
+        verbose_name="Цена за единицу", help_text="Введите цену", blank=True, null=True
+    )
     created_at = models.DateField(auto_now_add=True, verbose_name="Дата создания")
-    updated_at = models.DateField(auto_now=True, verbose_name="Дата последнего изменения")
+    updated_at = models.DateField(
+        auto_now=True, verbose_name="Дата последнего изменения"
+    )
 
     class Meta:
         verbose_name = "Продукт"
