@@ -2,6 +2,10 @@ from django.db import models
 
 
 class Category(models.Model):
+    """Модель Category хранит информацию о категориях с названием и описанием,
+    а также содержит настройки для удобного отображения в административной панели Django.
+    """
+
     name = models.CharField(
         max_length=100,
         verbose_name="Название категории",
@@ -20,6 +24,8 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    """Класс Product — это модель Django, описывающая товар или продукт в базе данных."""
+
     name = models.CharField(
         max_length=100, verbose_name="Название продукта", help_text="Название продукта"
     )
