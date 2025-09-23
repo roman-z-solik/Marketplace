@@ -79,17 +79,7 @@
 {% include "includes/menu.html" %}
 </header>
 <main>
-    <section class="py-5 text-center container">
-        <div class="row py-lg-5">
-            <div class="col-lg-6 col-md-8 mx-auto"><h1 class="fw-light">Интернет магазин</h1>
-                <p class="lead text-body-secondary">Составьте список слов, описывающих то, что вы
-                        предлагаете клиентам. Перечислите свои товары или услуги как можно лаконичнее.
-                        При составлении списка подумайте о том, что делает ваши товары уникальными и
-                        что отличает вас от конкурентов или соседних компаний.</p>
-                <p><a href="{% url 'catalog:product_list' %}" class="btn btn-primary my-2">Главная</a> <a href="{% url 'catalog:contacts' %}"
-                                                                           class="btn btn-secondary my-2">Контакты</a></p></div>
-        </div>
-    </section>
+
 {% block content %}
 {% endblock %}
 </main>
