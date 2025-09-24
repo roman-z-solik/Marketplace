@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+{% block content %}
+
+        <div class="album py-5 bg-body-tertiary">
+            <div class="container">
+                    <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto"><h1 class="fw-light">Интернет магазин</h1>
+                    <p class="lead text-body-secondary">Составьте список слов, описывающих то, что вы
+                            предлагаете клиентам. Перечислите свои товары или услуги как можно лаконичнее.
+                            При составлении списка подумайте о том, что делает ваши товары уникальными и
+                            что отличает вас от конкурентов или соседних компаний.</p>
+                    <p><a href="{% url 'catalog:product_list' %}" class="btn btn-primary my-2">Главная</a> <a href="{% url 'catalog:contacts' %}"
+                                                                               class="btn btn-secondary my-2">Контакты</a></p></div>
+            </div>
+    </section>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for product in products %}
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <img class="m-5" src="{{ product.image | media_filter }}">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ product.name }}</h4>
+                            <p class="card-text-secondary" >{{ product.description|truncatechars:100 }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a class="btn btn-sm btn-outline-secondary" href="{% url 'catalog:product_detail' product.pk %}">Подробнее</a>
+                                <button type="button" class="btn btn-sm btn-outline-primary">Цена: {{ product.price }} ₽</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

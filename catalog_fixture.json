@@ -1,0 +1,70 @@
+[
+{
+    "model": "catalog.product",
+    "pk": 4,
+    "fields": {
+        "name": "Iphone 15",
+        "description": "512GB, Gray space",
+        "image": "",
+        "category": 5,
+        "price": 210000,
+        "created_at": "2025-08-30",
+        "updated_at": "2025-08-30"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+        "name": "Samsung Galaxy C23 Ultra",
+        "description": "256GB, Серый цвет, 200MP камера",
+        "image": "",
+        "category": 5,
+        "price": 180000,
+        "created_at": "2025-08-30",
+        "updated_at": "2025-08-30"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 5,
+    "fields": {
+        "name": "Xiaomi Redmi Note 11",
+        "description": "1024GB, Синий",
+        "image": "",
+        "category": 5,
+        "price": 31000,
+        "created_at": "2025-08-30",
+        "updated_at": "2025-08-30"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 6,
+    "fields": {
+        "name": "55\\\" QLED 4K",
+        "description": "Фоновая подсветка",
+        "image": "",
+        "category": 5,
+        "price": 123000,
+        "created_at": "2025-08-30",
+        "updated_at": "2025-08-30"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 5,
+    "fields": {
+        "name": "Смартфоны",
+        "description": "Лучшие смартфоны по доступным ценам"
+    }
+},
+{
+    "model": "catalog.category",
+    "pk": 6,
+    "fields": {
+        "name": "Телевизоры",
+        "description": "Современный телевизор, который позволяет наслаждаться просмотром, станет вашим другом и помощником"
+    }
+}
+]
