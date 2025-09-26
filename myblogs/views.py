@@ -5,6 +5,8 @@ from myblogs.models import Blog
 
 
 class BlogsListView(ListView):
+    """BlogsListView - это класс на основе представления (view) в Django,
+    который наследуется от ListView и предназначен для отображения списка блогов."""
     model = Blog
     template_name = 'blogs_list.html'
 
@@ -14,6 +16,9 @@ class BlogsListView(ListView):
 
 
 class BlogDetailView(DetailView):
+    """BlogDetailView - это класс на основе представления (DetailView) в Django,
+    предназначенный для отображения детальной информации о конкретном блоге с
+    автоматическим подсчетом просмотров."""
     model = Blog
     template_name = 'blog_detail.html'
 
@@ -25,6 +30,8 @@ class BlogDetailView(DetailView):
 
 
 class BlogCreateView(CreateView):
+    """BlogCreateView - это класс на основе представления (CreateView) в Django,
+    предназначенный для создания новых записей блога через веб-интерфейс."""
     model = Blog
     template_name = 'create_blog.html'
     fields = ("title", "content", "image", "publication_sign")
@@ -32,6 +39,9 @@ class BlogCreateView(CreateView):
 
 
 class BlogUpdateView(UpdateView):
+    """BlogUpdateView - это класс на основе представления (UpdateView) в Django,
+    предназначенный для редактирования существующих записей блога. После успешного
+    обновления перенаправляет на детальную страницу этого же блога"""
     model = Blog
     template_name = 'update_blog.html'
     fields = ("title", "content", "image", "publication_sign")
@@ -42,6 +52,8 @@ class BlogUpdateView(UpdateView):
 
 
 class BlogDeleteView(DeleteView):
+    """BlogDeleteView - это класс на основе представления (DeleteView) в Django,
+    предназначенный для удаления записей блога с подтверждением действия."""
     model = Blog
     template_name = 'delete_blog.html'
     success_url = reverse_lazy('myblogs:blogs_list')

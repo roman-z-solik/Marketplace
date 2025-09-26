@@ -2,6 +2,8 @@ from django.db import models
 
 
 class Blog(models.Model):
+    """Модель описывает сущность "Блог"(публикацию) с полями для заголовка, контента,
+    изображения, даты создания, флага публикации и счётчика просмотров."""
     title = models.CharField(max_length=100, verbose_name="Заголовок", help_text="Введите заголовок")
     content = models.TextField(verbose_name="Текст публикации", help_text="Введите текст публикации",
                                blank=True, null=True)
