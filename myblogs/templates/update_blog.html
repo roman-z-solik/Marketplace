@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">Создание записи блога</h1>
+    <h1 class="display-4">Редактирование блога "{{ object.title }}"</h1>
 </div>
 
 <div class="container">
@@ -15,10 +15,10 @@
                         {% csrf_token %}
                         {{ form.as_p }}
                     </div>
-                    <button type="submit" class="btn btn-primary m-4">
-                        Создать
+                    <button type="submit" class="btn btn-info m-4">
+                        Сохранить
                     </button>
-                    <a class="btn btn-sm btn-outline-secondary m-4" href="{% url 'myblogs:blogs_list' %}">Отменить</a>
+                    <a class="btn btn-sm btn-outline-secondary m-4" href="{% url 'myblogs:blog_detail' blog.pk %}">Назад</a>
                 </div>
             </form>
         </div>

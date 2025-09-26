@@ -13,7 +13,8 @@
                             <h4 class="card-title">{{ blog.title }}</h4>
                             <p class="card-text-secondary" >{{ blog.content|truncatechars:100 }}</p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <a class="btn btn-sm btn-outline-secondary" href="{% url 'myblogs:blog_detail' blog.pk %}">Подробнее</a>
+                                <a class="btn btn-sm btn-outline-info" href="{% url 'myblogs:blog_detail' blog.pk %}">Подробнее</a>
+                                <a class="btn btn-sm btn-outline-success" href="{% url 'myblogs:create_blog'%}">Предложить</a>
                                 <ul style="font-size: 0.7rem;">
                                     <li>Опубликовано: {{ blog.created_at|date:"d M Y" }}</li>
                                     <li>Просмотров: {{ blog.views_count }}</li>

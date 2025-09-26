@@ -10,9 +10,10 @@
                         <div class="card-body">
                             <h4 class="card-text-secondary" >Заголовок: {{ blog.title }}</h4>
                             <p class="card-title">{{ blog.content }}</p>
-                            <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-center mt-4">
                                 <a class="btn btn-sm btn-outline-secondary" href="{% url 'myblogs:blogs_list' %}">Назад</a>
-                                <button type="button" class="btn btn-sm btn-outline-primary" href="{% url 'myblogs:create_blog' %}">Новая запись</button></div>
+                                <a class="btn btn-sm btn-outline-info" href="{% url 'myblogs:update_blog' blog.pk %}">Редактировать</a>
+                                <a class="btn btn-sm btn-outline-danger" href="{% url 'myblogs:delete_blog' blog.pk %}">Удалить</a>
                         </div>
                     </div>
                 </div>
