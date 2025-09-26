@@ -1,27 +1,17 @@
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
+from django.views.generic import ListView, DetailView
 
 from catalog.models import Product
 
-
-def product_list(request):
-    """
-    Функция product_list — это контроллер (представление) в Django, который отвечает за
-    отображение списка всех товаров.
-    """
-    products = Product.objects.all()
-    context = {"products": products}
-    return render(request, "product_list.html", context)
+class ProductListView(ListView):
+    model = Product
+    template_name = 'product_list.html'
 
 
-def product_detail(request, pk):
-    """
-    Функция product_detail — это контроллер (представление) в Django, который отвечает
-    за отображение подробной информации о конкретном товаре.
-    """
-    product = get_object_or_404(Product, pk=pk)
-    context = {"product": product}
-    return render(request, "product_detail.html", context)
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'product_detail.html'
 
 
 def contacts(request):
