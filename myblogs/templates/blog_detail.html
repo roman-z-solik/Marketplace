@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+{% block content %}
+    <div class="album py-5 bg-body-tertiary">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <img class="m-5 img-fluid" src="{{ blog.image | media_filter }}">
+                        <div class="card-body">
+                            <h4 class="card-text-secondary" >Заголовок: {{ blog.title }}</h4>
+                            <p class="card-title">{{ blog.content }}</p>
+                            <p class="card-text" style="font-size: 0.8rem;">Просмотров: {{ blog.views_count }}</p>
+                            <div class="d-flex justify-content-between align-items-center mt-4">
+                                <a class="btn btn-sm btn-outline-secondary" href="{% url 'myblogs:blogs_list' %}">Назад</a>
+                                <a class="btn btn-sm btn-outline-info" href="{% url 'myblogs:update_blog' blog.pk %}">Редактировать</a>
+                                <a class="btn btn-sm btn-outline-danger" href="{% url 'myblogs:delete_blog' blog.pk %}">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

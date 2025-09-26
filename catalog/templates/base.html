@@ -83,9 +83,15 @@
 {% endblock %}
 </main>
 <footer class="text-body-secondary py-5">
-    <div class="container"><p class="float-end mb-1"><a href="{% url 'catalog:product_list' %}">На главную</a></p>
+    <div class="container">
+        <ul class="list-unstyled float-end mb-1">
+            <li><a href="{% url 'catalog:product_list' %}">На главную</a></li>
+            <li><a href="{% url 'catalog:contacts' %}">Обратная связь</a></li>
+            <li><a href="{% url 'myblogs:blogs_list' %}">Наш блог</a></li>
+        </ul>
         <p class="mb-1">Основы Django</p>
-        <p class="mb-0">Проект интернет-магазина, который будет дорабатываться на каждом уроке в течение всего курса.</p></div>
+        <p class="mb-0">Проект интернет-магазина, который будет дорабатываться на каждом уроке в течение всего курса.</p>
+    </div>
 </footer>
 <script src="{% static '/js/bootstrap.bundle.min.js'%}"></script>
 </body>

@@ -1,7 +1,7 @@
     <div class="collapse text-bg-dark" id="navbarHeader">
         <div class="container">
             <div class="row">
-                <div class="col-sm-8 col-md-7 py-4"><h4>Интернет магазин</h4>
+                <div class="col-sm-8 col-md-7 py-4">
                     <p class="text-body-secondary">Составьте список слов, описывающих то, что вы
                         предлагаете клиентам. Перечислите свои товары или услуги как можно лаконичнее.
                         При составлении списка подумайте о том, что делает ваши товары уникальными и
@@ -11,7 +11,7 @@
                     <ul class="list-unstyled">
                         <li><a href="{% url 'catalog:product_list' %}" class="text-white">Главная</a></li>
                         <li><a href="{% url 'catalog:contacts' %}" class="text-white">Контакты</a></li>
-                        <li><a href="#" class="text-white">О нас</a></li>
+                        <li><a href="{% url 'myblogs:blogs_list' %}" class="text-white">Наш блог</a></li>
                     </ul>
                 </div>
             </div>

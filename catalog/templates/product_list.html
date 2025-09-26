@@ -11,15 +11,15 @@
                             предлагаете клиентам. Перечислите свои товары или услуги как можно лаконичнее.
                             При составлении списка подумайте о том, что делает ваши товары уникальными и
                             что отличает вас от конкурентов или соседних компаний.</p>
-                    <p><a href="{% url 'catalog:product_list' %}" class="btn btn-primary my-2">Главная</a> <a href="{% url 'catalog:contacts' %}"
+                    <p><a href="{% url 'myblogs:blogs_list' %}" class="btn btn-primary my-2">Наш блог</a> <a href="{% url 'catalog:contacts' %}"
                                                                                class="btn btn-secondary my-2">Контакты</a></p></div>
             </div>
     </section>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                {% for product in products %}
+                {% for product in object_list %}
                 <div class="col">
                     <div class="card shadow-sm">
-                        <img class="m-5" src="{{ product.image | media_filter }}">
+                        <a href="{% url 'catalog:product_detail' product.pk %}"><img src="{{ product.image | media_filter }} " alt="Фото"></a>
                         <div class="card-body">
                             <h4 class="card-title">{{ product.name }}</h4>
                             <p class="card-text-secondary" >{{ product.description|truncatechars:100 }}</p>
