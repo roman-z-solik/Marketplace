@@ -14,7 +14,9 @@
                             <p class="card-text-secondary" > Описание: {{ product.description }}</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <a class="btn btn-sm btn-outline-secondary" href="{% url 'catalog:product_list' %}">Назад</a>
-                                <button type="button" class="btn btn-sm btn-outline-primary">Цена: {{ product.price }} ₽</button></div>
+                                <a class="btn btn-sm btn-outline-info" href="{% url 'catalog:update_product' product.pk %}">Редактировать</a>
+                                <a class="btn btn-sm btn-outline-danger" href="{% url 'catalog:delete_product' product.pk %}">Удалить</a>
+                                <a class="btn btn-sm btn-outline-primary" href="{% url 'catalog:update_product' product.pk %}">Цена: {{ product.price }} ₽</a></div>
                         </div>
                     </div>
                 </div>

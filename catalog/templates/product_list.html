@@ -19,12 +19,13 @@
                 {% for product in object_list %}
                 <div class="col">
                     <div class="card shadow-sm">
-                        <a href="{% url 'catalog:product_detail' product.pk %}"><img src="{{ product.image | media_filter }} " alt="Фото"></a>
+                        <a href="{% url 'catalog:product_detail' product.pk %}"><img class="m-5 img-fluid" src="{{ product.image | media_filter }} " alt="Фото"></a>
                         <div class="card-body">
                             <h4 class="card-title">{{ product.name }}</h4>
                             <p class="card-text-secondary" >{{ product.description|truncatechars:100 }}</p>
                             <div class="d-flex justify-content-between align-items-center">
-                                <a class="btn btn-sm btn-outline-secondary" href="{% url 'catalog:product_detail' product.pk %}">Подробнее</a>
+                                <a class="btn btn-sm btn-outline-info" href="{% url 'catalog:product_detail' product.pk %}">Подробнее</a>
+                                <a class="btn btn-sm btn-outline-success" href="{% url 'catalog:create_product' %}">Добавить</a>
                                 <button type="button" class="btn btn-sm btn-outline-primary">Цена: {{ product.price }} ₽</button>
                             </div>
                         </div>

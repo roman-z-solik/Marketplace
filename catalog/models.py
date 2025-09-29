@@ -1,3 +1,4 @@
+from django.core.validators import FileExtensionValidator
 from django.db import models
 
 
@@ -9,11 +10,8 @@ class Category(models.Model):
     name = models.CharField(
         max_length=100,
         verbose_name="Название категории",
-        help_text="Введите название категории",
     )
-    description = models.TextField(
-        verbose_name="Описание", help_text="Введите описание", blank=True, null=True
-    )
+    description = models.TextField(verbose_name="Описание", blank=True, null=True)
 
     class Meta:
         verbose_name = "Категория"
@@ -27,28 +25,30 @@ class Product(models.Model):
     """Класс Product — это модель Django, описывающая товар или продукт в базе данных."""
 
     name = models.CharField(
-        max_length=100, verbose_name="Название продукта", help_text="Название продукта"
+        max_length=100,
+        verbose_name="Название продукта",
     )
     description = models.TextField(
-        verbose_name="Описание", help_text="Описание продукта", blank=True, null=True
+        verbose_name="Описание",
+        blank=True,
+        null=True,
     )
+
     image = models.ImageField(
         upload_to="catalog/media",
         blank=True,
         null=True,
         verbose_name="Изображение",
-        help_text="Изображение товара",
+        validators=[FileExtensionValidator(allowed_extensions=["jpg", "jpeg", "png"])],
+        help_text="Загрузите изображение в формате JPEG или PNG (макс. 5 МБ)",
     )
     category = models.ForeignKey(
         Category,
         on_delete=models.CASCADE,
         related_name="products",
         verbose_name="Категория",
-        help_text="Выберите категорию",
     )
-    price = models.IntegerField(
-        verbose_name="Цена за единицу", help_text="Введите цену", blank=True, null=True
-    )
+    price = models.IntegerField(verbose_name="Цена за единицу", blank=True, null=True)
     created_at = models.DateField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateField(
         auto_now=True, verbose_name="Дата последнего изменения"

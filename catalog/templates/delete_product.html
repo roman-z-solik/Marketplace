@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Удаление {{ object.name }}</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+        </div>
+        <div class="col-6">
+            <form class="row" method="post" enctype="multipart/form-data">
+                <div class="card">
+                    <p class="card-text">Вы действительно хотите удалить запись {{ object.name }}?</p>
+                    <div class="card-body">
+                        {% csrf_token %}
+                    </div>
+                    <div class="pt-md-2 pb-md-2 mx-auto">
+                        <button type="submit" class="btn btn-danger">
+                            Удалить
+                        </button>
+                        <a class="btn btn-secondary" href="{% url 'catalog:product_list' %}">Отменить</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-3">
+        </div>
+    </div>
+</div>
+{% endblock %}

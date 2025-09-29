@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Добавление продукта</h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-3">
+        </div>
+        <div class="col-6">
+            <form class="row" method="post" enctype="multipart/form-data">
+                <div class="card">
+                    <div class="card-body">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                    </div>
+                    <button type="submit" class="btn btn-primary m-4">
+                        Создать
+                    </button>
+                    <a class="btn btn-sm btn-outline-secondary m-4" href="{% url 'catalog:product_list' %}">Отменить</a>
+                </div>
+            </form>
+        </div>
+        <div class="col-3">
+        </div>
+    </div>
+</div>
+{% endblock %}
