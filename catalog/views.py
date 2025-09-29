@@ -1,17 +1,18 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import DetailView, ListView
 
 from catalog.models import Product
 
+
 class ProductListView(ListView):
     model = Product
-    template_name = 'product_list.html'
+    template_name = "product_list.html"
 
 
 class ProductDetailView(DetailView):
     model = Product
-    template_name = 'product_detail.html'
+    template_name = "product_detail.html"
 
 
 def contacts(request):

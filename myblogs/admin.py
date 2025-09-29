@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from myblogs.models import Blog
 
+
 @admin.register(Blog)
 class BlogAdmin(admin.ModelAdmin):
     """Декоратор и класс BlogAdmin настраивают отображение и поведение модели Blog в
@@ -14,5 +15,3 @@ class BlogAdmin(admin.ModelAdmin):
         "title",
         "content",
     )
-
-
