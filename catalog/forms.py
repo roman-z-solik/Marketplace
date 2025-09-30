@@ -75,18 +75,25 @@ class ProductForm(StyleFormMixin, ModelForm):
 
     def clean_image(self):
         """Валидация изображения"""
+
         image = self.cleaned_data.get("image")
-        if image.size > ValidationConstants.MAX_IMAGE_SIZE:
-            raise ValidationError(
-                ValidationConstants.ERROR_MESSAGES["image_size"],
-                code="image_size_exceeded",
-            )
-        else:
-            ext = os.path.splitext(image.name)[1].lower().lstrip(".")
-            if ext not in ValidationConstants.ALLOWED_IMAGE_EXTENSIONS:
+        if image:
+            if image.size > ValidationConstants.MAX_IMAGE_SIZE:
                 raise ValidationError(
-                    ValidationConstants.ERROR_MESSAGES["image_format"],
-                    code="invalid_image_format",
+                    ValidationConstants.ERROR_MESSAGES["image_size"],
+                    code="image_size_exceeded",
                 )
             else:
-                return image
+                ext = os.path.splitext(image.name)[1].lower().lstrip(".")
+                if ext not in ValidationConstants.ALLOWED_IMAGE_EXTENSIONS:
+                    raise ValidationError(
+                        ValidationConstants.ERROR_MESSAGES["image_format"],
+                        code="invalid_image_format",
+                    )
+                else:
+                    return image
+        else:
+            raise ValidationError(
+                        ValidationConstants.ERROR_MESSAGES["image_corrupted"],
+                        code="image_corrupted",
+                    )
