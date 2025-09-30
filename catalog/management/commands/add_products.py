@@ -4,6 +4,9 @@ from catalog.models import Category, Product
 
 
 class Command(BaseCommand):
+    """Данный класс Command представляет собой пользовательскую команду Django, предназначенную
+    для добавления (или обновления) набора продуктов в базу данных."""
+
     help = "Добавление продукта в базу данных"
 
     def handle(self, *args, **kwargs):
