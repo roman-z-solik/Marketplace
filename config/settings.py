@@ -14,6 +14,7 @@ DEBUG = True if os.getenv("DEBUG") == "True" else False
 ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
+    "users",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -98,3 +99,19 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 FILE_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024
 DATA_UPLOAD_MAX_MEMORY_SIZE = 5 * 1024 * 1024
+
+AUTH_USER_MODEL = "users.CustomUser"
+
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
+
+LOGIN_URL = "users:login"
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.mail.ru"
+EMAIL_PORT = 2525
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = os.getenv("EMAIL")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_PSWD")
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
