@@ -94,6 +94,6 @@ class ProductForm(StyleFormMixin, ModelForm):
                     return image
         else:
             raise ValidationError(
-                        ValidationConstants.ERROR_MESSAGES["image_corrupted"],
-                        code="image_corrupted",
-                    )
+                ValidationConstants.ERROR_MESSAGES["image_corrupted"],
+                code="image_corrupted",
+            )
