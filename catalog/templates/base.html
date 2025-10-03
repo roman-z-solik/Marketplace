@@ -43,7 +43,7 @@
                 <svg class="bi me-2 opacity-50" aria-hidden="true">
                     <use href="#sun-fill"></use>
                 </svg>
-                Light
+                Светлая тема
                 <svg class="bi ms-auto d-none" aria-hidden="true">
                     <use href="#check2"></use>
                 </svg>
@@ -55,7 +55,7 @@
                 <svg class="bi me-2 opacity-50" aria-hidden="true">
                     <use href="#moon-stars-fill"></use>
                 </svg>
-                Dark
+                Темная тема
                 <svg class="bi ms-auto d-none" aria-hidden="true">
                     <use href="#check2"></use>
                 </svg>
@@ -67,7 +67,7 @@
                 <svg class="bi me-2 opacity-50" aria-hidden="true">
                     <use href="#circle-half"></use>
                 </svg>
-                Auto
+                Авто
                 <svg class="bi ms-auto d-none" aria-hidden="true">
                     <use href="#check2"></use>
                 </svg>
@@ -86,9 +86,24 @@
 <footer class="text-body-secondary py-5">
     <div class="container">
         <ul class="list-unstyled float-end mb-1">
-            <li><a href="{% url 'catalog:product_list' %}">На главную</a></li>
-            <li><a href="{% url 'catalog:contacts' %}">Обратная связь</a></li>
-            <li><a href="{% url 'myblogs:blogs_list' %}">Наш блог</a></li>
+            <li><a href="{% url 'catalog:product_list' %}" class="text-body-secondary text-decoration-none">На главную</a></li>
+            <li><a href="{% url 'catalog:contacts' %}" class="text-body-secondary text-decoration-none">Обратная связь</a></li>
+            <li><a href="{% url 'myblogs:blogs_list' %}" class="text-body-secondary text-decoration-none">Наш блог</a></li>
+
+            {% if user.is_authenticated %}
+            <li>
+                <form method="post" action="{% url 'users:logout' %}" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-link p-0 text-body-secondary text-decoration-none"
+                            style="border: none; background: none;">
+                        Выход
+                    </button>
+                </form>
+            </li>
+            {% else %}
+            <li><a href="{% url 'users:login' %}" class="text-body-secondary text-decoration-none">Вход</a></li>
+            <li><a href="{% url 'users:register' %}" class="text-body-secondary text-decoration-none">Регистрация</a></li>
+            {% endif %}
         </ul>
         <p class="mb-1">Основы Django</p>
         <p class="mb-0">Проект интернет-магазина, который будет дорабатываться на каждом уроке в течение всего курса.</p>

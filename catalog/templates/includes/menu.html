@@ -1,33 +1,93 @@
-    <div class="collapse text-bg-dark" id="navbarHeader">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-8 col-md-7 py-4">
-                    <p class="text-body-secondary">Составьте список слов, описывающих то, что вы
-                        предлагаете клиентам. Перечислите свои товары или услуги как можно лаконичнее.
-                        При составлении списка подумайте о том, что делает ваши товары уникальными и
-                        что отличает вас от конкурентов или соседних компаний.</p></div>
-                <div class="col-sm-4 offset-md-1 py-4">
-                    <h4>МЕНЮ</h4>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'catalog:product_list' %}" class="text-white">Главная</a></li>
-                        <li><a href="{% url 'catalog:contacts' %}" class="text-white">Контакты</a></li>
-                        <li><a href="{% url 'myblogs:blogs_list' %}" class="text-white">Наш блог</a></li>
-                    </ul>
-                </div>
+<div class="collapse text-bg-dark" id="navbarHeader">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-md-7 py-4">
+                <p class="text-body-secondary">Составьте список слов, описывающих то, что вы
+                    предлагаете клиентам. Перечислите свои товары или услуги как можно лаконичнее.
+                    При составлении списка подумайте о том, что делает ваши товары уникальными и
+                    что отличает вас от конкурентов или соседних компаний.</p></div>
+            <div class="col-sm-4 offset-md-1 py-4">
+                <h4>МЕНЮ</h4>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'catalog:product_list' %}" class="text-white">Главная</a></li>
+                    <li><a href="{% url 'catalog:contacts' %}" class="text-white">Контакты</a></li>
+                    <li><a href="{% url 'myblogs:blogs_list' %}" class="text-white">Наш блог</a></li>
+                </ul>
+                {% if user.is_authenticated %}
+                {% csrf_token %}
+                <ul class="list-unstyled">
+                    <li class="nav-item">
+                        <form method="post" action="{% url 'users:logout' %}" class="d-inline">
+                            {% csrf_token %}
+                            <button type="submit" class="text-white">
+                                Выход
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+                {% else %}
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'users:login' %}" class="text-white">Вход</a></li>
+                    <li><a href="{% url 'users:register' %}" class="text-white">Регистрация</a></li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
     </div>
-    <div class="navbar navbar-dark bg-dark shadow-sm">
-        <div class="container"><a href="{% url 'catalog:product_list' %}" class="navbar-brand d-flex align-items-center">
+</div>
+<div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <!-- Логотип и бренд -->
+        <a href="{% url 'catalog:product_list' %}" class="navbar-brand d-flex align-items-center">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor"
                  stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="me-2"
                  viewBox="0 0 24 24">
                 <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
                 <circle cx="12" cy="13" r="4"></circle>
             </svg>
-            <strong>Интернет магазин</strong> </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
-                    aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation"><span
-                    class="navbar-toggler-icon"></span></button>
+            <strong>Интернет магазин</strong>
+        </a>
+
+        <!-- Кнопка мобильного меню -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
+                aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Кнопки авторизации -->
+        <div class="d-none d-md-flex justify-content-end align-items-center gap-2">
+            {% if user.is_authenticated %}
+            <span class="text-light ms-2">
+                Вы вошли как {{ request.user.first_name }} {{ request.user.last_name }}
+            </span>
+            <form method="post" action="{% url 'users:logout' %}" class="m-0">
+                {% csrf_token %}
+                <button class="btn btn-outline-light ms-2" type="submit">Выход</button>
+            </form>
+            {% else %}
+            <a class="btn btn-outline-light" href="{% url 'users:login' %}">Вход</a>
+            <a class="btn btn-primary" href="{% url 'users:register' %}">Регистрация</a>
+            {% endif %}
         </div>
     </div>
+</div>
+
+<!-- Мобильное меню -->
+<div class="collapse navbar-collapse bg-dark">
+    <div class="container py-3">
+        <div class="d-md-none">
+            {% if user.is_authenticated %}
+            <span class="text-light mb-2 d-block">
+                Вы вошли как {{ request.user.first_name }} {{ request.user.last_name }}
+            </span>
+            <form method="post" action="{% url 'users:logout' %}" class="m-0">
+                {% csrf_token %}
+                <button class="btn btn-outline-light w-100 mb-2" type="submit">Выход</button>
+            </form>
+            {% else %}
+            <a class="btn btn-outline-light w-100 mb-2" href="{% url 'users:login' %}">Вход</a>
+            <a class="btn btn-primary w-100" href="{% url 'users:register' %}">Регистрация</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
