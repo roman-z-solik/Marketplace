@@ -1,3 +1,5 @@
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -21,7 +23,7 @@ class ProductListView(ListView):
     template_name = "product_list.html"
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     """Класс ProductDetailView(DetailView) - это класс-представление для отображения
     детальной информации об одном объекте."""
 
@@ -30,7 +32,7 @@ class ProductDetailView(DetailView):
     template_name = "product_detail.html"
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     """Класс ProductCreateView(CreateView) - это класс-представление для создания новых объектов."""
 
     model = Product
@@ -39,7 +41,7 @@ class ProductCreateView(CreateView):
     success_url = reverse_lazy("catalog:product_list")
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     """Класс ProductUpdateView(UpdateView) - это класс-представление для редактирования
     существующих объектов."""
 
@@ -52,7 +54,7 @@ class ProductUpdateView(UpdateView):
         return reverse_lazy("catalog:product_detail", args=[self.kwargs.get("pk")])
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     """Класс ProductDeleteView(DeleteView) - это класс-представление для удаления объектов."""
 
     model = Product
