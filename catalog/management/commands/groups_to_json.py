@@ -17,7 +17,6 @@ class Command(BaseCommand):
         for group in groups:
             permissions_data = []
             for perm in group.permissions.all():
-                # Фильтруем разрешения только для модели Product (опционально, если нужно)
                 if perm.content_type == content_type:
                     permissions_data.append({
                         'codename': perm.codename,

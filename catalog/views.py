@@ -1,4 +1,3 @@
-# catalog/views.py
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponse, HttpResponseForbidden
@@ -26,7 +25,7 @@ class ProductListView(ListView):
     def get_queryset(self):
         queryset = Product.objects.all()
 
-        if not self.request.user.is_staff:  # Или другая проверка: self.request.user.has_perm('catalog.can_unpublish_product')
+        if not self.request.user.is_staff:
             queryset = queryset.filter(status='published')
         return queryset
 
@@ -41,7 +40,8 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
-    """Класс ProductCreateView(CreateView) - это класс-представление для создания новых объектов."""
+    """Класс ProductCreateView(CreateView) - это класс-представление для создания новых
+    объектов."""
 
     model = Product
     template_name = "create_product.html"
@@ -49,7 +49,6 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy("catalog:product_list")
 
     def form_valid(self, form):
-        # Автоматически присваиваем владельца текущему пользователю
         form.instance.owner = self.request.user
         return super().form_valid(form)
 
@@ -94,6 +93,9 @@ class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 @login_required
 def unpublish_product(request, product_id):
+    """Функция unpublish_product — это представление Django, защищенное декоратором
+    @login_required, которое позволяет авторизованным пользователям с разрешением
+    'catalog.can_unpublish_product' отменить публикацию продукта"""
     if not request.user.has_perm('catalog.can_unpublish_product'):
         return HttpResponseForbidden("У вас нет прав отменять публикацию продукта.")
 
@@ -105,10 +107,12 @@ def unpublish_product(request, product_id):
 
 @login_required
 def delete_product(request, product_id):
+    """Функция delete_product — это представление Django, защищенное декоратором
+    @login_required, которое позволяет авторизованным пользователям удалять продукты,
+    только если они являются владельцами продукта или состоят в группе Модератор продуктов"""
     product = get_object_or_404(Product, id=product_id)
     user = request.user
-    # Проверка: только владелец или модератор (группа 'moderator')
-    if not (product.owner == user or user.groups.filter(name='moderator').exists()):
+    if not (product.owner == user or user.groups.filter(name='Модератор продуктов').exists()):
         return HttpResponseForbidden("У вас нет прав удалять продукт.")
 
     product.delete()
