@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-{% load my_tags %}
+{% load my_tags my_filters %}
+
 {% block content %}
     <div class="album py-5 bg-body-tertiary">
         <div class="container">
@@ -13,8 +14,11 @@
                             <p class="card-text" style="font-size: 0.8rem;">Просмотров: {{ blog.views_count }}</p>
                             <div class="d-flex justify-content-between align-items-center mt-4">
                                 <a class="btn btn-sm btn-outline-secondary" href="{% url 'myblogs:blogs_list' %}">Назад</a>
+                                {% if user|has_group:"Контент-менеджер" %}
                                 <a class="btn btn-sm btn-outline-info" href="{% url 'myblogs:update_blog' blog.pk %}">Редактировать</a>
                                 <a class="btn btn-sm btn-outline-danger" href="{% url 'myblogs:delete_blog' blog.pk %}">Удалить</a>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
