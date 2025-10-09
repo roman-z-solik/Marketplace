@@ -9,7 +9,7 @@ class ProductAdmin(admin.ModelAdmin):
     административной панели Django."""
 
     list_display = ("id", "name", "description", "price", "category")
-    list_filter = ("category",)
+    list_filter = ("category", "status")
     search_fields = (
         "name",
         "category",

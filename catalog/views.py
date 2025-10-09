@@ -1,7 +1,8 @@
-from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
-from django.shortcuts import render
+# catalog/views.py
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import HttpResponse, HttpResponseForbidden
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
@@ -22,6 +23,13 @@ class ProductListView(ListView):
     model = Product
     template_name = "product_list.html"
 
+    def get_queryset(self):
+        queryset = Product.objects.all()
+
+        if not self.request.user.is_staff:  # Или другая проверка: self.request.user.has_perm('catalog.can_unpublish_product')
+            queryset = queryset.filter(status='published')
+        return queryset
+
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
     """Класс ProductDetailView(DetailView) - это класс-представление для отображения
@@ -40,26 +48,71 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     form_class = ProductForm
     success_url = reverse_lazy("catalog:product_list")
 
+    def form_valid(self, form):
+        # Автоматически присваиваем владельца текущему пользователю
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
 
-class ProductUpdateView(LoginRequiredMixin, UpdateView):
+
+class OwnerRequiredMixin(UserPassesTestMixin):
+    """Миксин для проверки, что пользователь является владельцем продукта."""
+    def test_func(self):
+        obj = self.get_object()
+        return obj.owner == self.request.user
+
+
+class ProductUpdateView(LoginRequiredMixin, OwnerRequiredMixin, UpdateView):
     """Класс ProductUpdateView(UpdateView) - это класс-представление для редактирования
-    существующих объектов."""
+    существующих объектов. Только владелец может редактировать."""
 
     model = Product
     template_name = "update_product.html"
     form_class = ProductForm
-    success_url = reverse_lazy("catalog:product_list")
 
     def get_success_url(self):
         return reverse_lazy("catalog:product_detail", args=[self.kwargs.get("pk")])
 
 
-class ProductDeleteView(LoginRequiredMixin, DeleteView):
-    """Класс ProductDeleteView(DeleteView) - это класс-представление для удаления объектов."""
+class ProductDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    """Класс ProductDeleteView(DeleteView) - это класс-представление для удаления объектов.
+    Удалять может владелец или пользователь с правами модератора (группа 'moderator')."""
 
     model = Product
     template_name = "delete_product.html"
     success_url = reverse_lazy("catalog:product_list")
+
+    def test_func(self):
+        obj = self.get_object()
+        user = self.request.user
+        # Владелец или модератор
+        if obj.owner == user:
+            return True
+        if user.groups.filter(name='moderator').exists():
+            return True
+        return False
+
+
+@login_required
+def unpublish_product(request, product_id):
+    if not request.user.has_perm('catalog.can_unpublish_product'):
+        return HttpResponseForbidden("У вас нет прав отменять публикацию продукта.")
+
+    product = get_object_or_404(Product, id=product_id)
+    product.status = 'draft'
+    product.save()
+    return redirect('product_list')
+
+
+@login_required
+def delete_product(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    user = request.user
+    # Проверка: только владелец или модератор (группа 'moderator')
+    if not (product.owner == user or user.groups.filter(name='moderator').exists()):
+        return HttpResponseForbidden("У вас нет прав удалять продукт.")
+
+    product.delete()
+    return redirect('product_list')
 
 
 def contacts(request):
@@ -69,8 +122,6 @@ def contacts(request):
     """
     if request.method == "POST":
         name = request.POST.get("name")
-        phone = request.POST.get("phone")
-        message = request.POST.get("message")
 
         return HttpResponse("Сообщение получено, {}!".format(name))
     return render(request, "contacts.html")
