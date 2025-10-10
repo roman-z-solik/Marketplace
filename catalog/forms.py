@@ -21,6 +21,12 @@ class StyleFormMixin:
 
 
 class ProductForm(StyleFormMixin, ModelForm):
+    """Класс ProductForm — это форма Django на основе ModelForm, которая наследуется от
+    StyleFormMixin (для стилизации) и предназначена для модели Product.
+    Она включает все поля модели и реализует кастомную валидацию для полей:
+    цены, имени, описания и изображения. Валидация использует константы из
+    ValidationConstants. Форма добавляет placeholders для улучшения
+    интерфейса."""
     class Meta:
         model = Product
         fields = "__all__"

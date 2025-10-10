@@ -1,6 +1,8 @@
 from django.core.validators import FileExtensionValidator
 from django.db import models
 
+from users.models import CustomUser
+
 
 class Category(models.Model):
     """Модель Category хранит информацию о категориях с названием и описанием,
@@ -23,6 +25,8 @@ class Category(models.Model):
 
 class Product(models.Model):
     """Класс Product — это модель Django, описывающая товар или продукт в базе данных."""
+
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='products')
 
     name = models.CharField(
         max_length=100,
@@ -53,11 +57,26 @@ class Product(models.Model):
     updated_at = models.DateField(
         auto_now=True, verbose_name="Дата последнего изменения"
     )
+    STATUS_CHOICES = [
+        ('draft', 'Черновик'),
+        ('moderated', 'На модерации',),
+        ('published', 'Опубликован'),
+    ]
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default='draft',
+        verbose_name="Статус публикации"
+    )
 
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
         ordering = ["name", "category", "price", "created_at", "updated_at"]
+        permissions = [
+            ("can_unpublish_product", "Can unpublish product"),
+            ("can_delete_product", "Can delete product"),
+        ]
 
     def __str__(self):
         return self.name
