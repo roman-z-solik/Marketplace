@@ -90,11 +90,11 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 (
-                    "category",
+                    "catalog",
                     models.ForeignKey(
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="products",
-                        to="catalog.category",
+                        to="catalog.catalog",
                         verbose_name="Категория",
                     ),
                 ),
@@ -102,7 +102,7 @@ class Migration(migrations.Migration):
             options={
                 "verbose_name": "Продукт",
                 "verbose_name_plural": "Продукты",
-                "ordering": ["name", "category", "price", "created_at", "updated_at"],
+                "ordering": ["name", "catalog", "price", "created_at", "updated_at"],
             },
         ),
     ]
