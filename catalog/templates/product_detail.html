@@ -12,12 +12,23 @@
                         <p class="card-text-secondary">Категория: {{ product.category }}</p>
                         <h4 class="card-title">Название: {{ product.name }}</h4>
                         <p class="card-text-secondary">Описание: {{ product.description }}</p>
+
                         <p class="card-text">
+                            {% if user == product.owner or user|in_group:"Модератор продуктов" %}
                             <strong>Статус:</strong>
                             {% if product.status == "published" %}
-                                <button class="btn btn-sm btn-success" disabled>{{ product.get_status_display }}</button>
+                            <button class="btn btn-sm btn-success" disabled>{{ product.get_status_display }}</button>
                             {% else %}
-                                <button class="btn btn-sm btn-outline-light" disabled>{{ product.get_status_display }}</button>
+                            <button class="btn btn-sm btn-outline-light" disabled>{{ product.get_status_display }}
+                            </button>
+                            {% endif %}
+                        </p>
+
+                        <p class="card-text">
+                            <strong>Владелец:</strong>
+                            <span class="badge bg-info text-dark">
+        <i class="bi bi-person-fill"></i> {{ product.owner.email }}
+    </span>
                             {% endif %}
                         </p>
 
@@ -25,15 +36,15 @@
                             <a class="btn btn-sm btn-outline-secondary"
                                href="{% url 'catalog:product_list' %}">Назад</a>
                             {% if user == product.owner %}
-                                <a class="btn btn-sm btn-outline-info" href="{% url 'catalog:update_product' product.pk %}">Редактировать</a>
+                            <a class="btn btn-sm btn-outline-info" href="{% url 'catalog:update_product' product.pk %}">Редактировать</a>
                             {% endif %}
                             {% if user == product.owner or user|in_group:"Модератор продуктов" %}
-                                <div class="d-flex gap-2 flex-wrap">
-                                    {% if perms.catalog.can_unpublish_product and product.status == 'published' %}
-                                    <a href="{% url 'catalog:delete_product' product.pk %}"
-                                       class="btn btn-sm btn-danger">Удалить</a>
-                                    {% endif %}
-                                </div>
+                            <div class="d-flex gap-2 flex-wrap">
+                                {% if perms.catalog.can_unpublish_product and product.status == 'published' %}
+                                <a href="{% url 'catalog:delete_product' product.pk %}"
+                                   class="btn btn-sm btn-danger">Удалить</a>
+                                {% endif %}
+                            </div>
                             {% endif %}
                             <button class="btn btn-sm btn-outline-primary" disabled>Цена: {{ product.price }} ₽</button>
                         </div>

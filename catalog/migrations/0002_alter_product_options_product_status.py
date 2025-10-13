@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.AlterModelOptions(
             name="product",
             options={
-                "ordering": ["name", "category", "price", "created_at", "updated_at"],
+                "ordering": ["name", "catalog", "price", "created_at", "updated_at"],
                 "permissions": [
                     ("can_unpublish_product", "Can unpublish product"),
                     ("can_delete_product", "Can delete product"),

@@ -22,19 +22,19 @@ class Command(BaseCommand):
                 "name": "Iphone 15",
                 "description": "512GB, Gray space",
                 "price": 210000,
-                "category": category,
+                "catalog": category,
             },
             {
                 "name": "Samsung Galaxy C23 Ultra",
                 "description": "256GB, Серый цвет, 200MP камера",
                 "price": 180000,
-                "category": category,
+                "catalog": category,
             },
             {
                 "name": "Xiaomi Redmi Note 11",
                 "description": "1024GB, Синий",
                 "price": 31000,
-                "category": category,
+                "catalog": category,
             },
         ]
 

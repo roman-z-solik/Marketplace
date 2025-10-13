@@ -58,7 +58,7 @@
         <div class="d-none d-md-flex justify-content-end align-items-center gap-2">
             {% if user.is_authenticated %}
             <span class="text-light ms-2">
-                Вы вошли как {{ request.user.first_name }} {{ request.user.last_name }}
+                Вы вошли как {{ request.user.first_name }} {{ request.user.last_name }}, логин: {{ request.user.email}}
             </span>
             <form method="post" action="{% url 'users:logout' %}" class="m-0">
                 {% csrf_token %}
@@ -78,7 +78,7 @@
         <div class="d-md-none">
             {% if user.is_authenticated %}
             <span class="text-light mb-2 d-block">
-                Вы вошли как {{ request.user.first_name }} {{ request.user.last_name }}
+                Вы вошли как {{ request.user.first_name }} {{ request.user.last_name }}, логин: {{ request.user.email}}
             </span>
             <form method="post" action="{% url 'users:logout' %}" class="m-0">
                 {% csrf_token %}
